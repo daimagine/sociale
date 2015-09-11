@@ -5,12 +5,12 @@ import logging
 import urllib
 import uuid
 
-from lannister import settings
 from stark.models.schema import ProductSchema, CustomerSocmedAccountTokenSchema
 
 from .utils import StringUtils
 from sociale.celery import app
 
+TWEET_HEADLINE_LENGTH = 115
 logger = logging.getLogger(__name__)
 
 
@@ -84,7 +84,7 @@ def post_twitter(params):
 		auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 		api = tweepy.API(auth)
 
-		headline = StringUtils.ellipsis(headline, length=settings.TWEET_HEADLINE_LENGTH, suffix='')
+		headline = StringUtils.ellipsis(headline, length=TWEET_HEADLINE_LENGTH, suffix='')
 		logger.debug('TwitterTask: headline : %s' % headline)
 		status = "%s %s" % (headline, product_page)
 		
